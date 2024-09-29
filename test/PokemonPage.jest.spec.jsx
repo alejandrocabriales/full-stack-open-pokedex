@@ -1,10 +1,8 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import axiosMock from "axios"
-import { act } from "react-dom/test-utils"
 import "@testing-library/jest-dom"
 import PokemonPage from "../src/PokemonPage"
-
 import { MemoryRouter } from "react-router-dom"
 
 jest.mock("axios")
@@ -72,17 +70,19 @@ const next = {
   id: 134
 }
 
+afterEach(() => {
+  jest.resetAllMocks()
+})
+
 describe("<PokemonPage />", () => {
   it("should render abilities", async () => {
     axiosMock.get.mockResolvedValueOnce({ data: pokemonList })
 
-    await act(async () => {
-      render(
-        <MemoryRouter initialEntries={["/pokemon/eevee"]}>
-          <PokemonPage />
-        </MemoryRouter>,
-      )
-    })
+    await render(
+      <MemoryRouter initialEntries={["/pokemon/eevee"]}>
+        <PokemonPage />
+      </MemoryRouter>
+    )
 
     expect(screen.getByText("adaptability")).toBeVisible()
     expect(screen.getByText("anticipation")).toBeVisible()
@@ -91,13 +91,11 @@ describe("<PokemonPage />", () => {
   it("should render stats", async () => {
     axiosMock.get.mockResolvedValueOnce({ data: pokemonList })
 
-    await act(async () => {
-      render(
-        <MemoryRouter initialEntries={["/pokemon/eevee"]}>
-          <PokemonPage />
-        </MemoryRouter>,
-      )
-    })
+    await render(
+      <MemoryRouter initialEntries={["/pokemon/eevee"]}>
+        <PokemonPage />
+      </MemoryRouter>
+    )
 
     expect(screen.getByTestId("stats")).toHaveTextContent("hp55attack55")
   })
@@ -105,13 +103,11 @@ describe("<PokemonPage />", () => {
   it("should render previous and next urls if they exist", async () => {
     axiosMock.get.mockResolvedValueOnce({ data: pokemonList })
 
-    await act(async () => {
-      render(
-        <MemoryRouter initialEntries={["/pokemon/eevee"]}>
-          <PokemonPage previous={previous} next={next}/>
-        </MemoryRouter>,
-      )
-    })
+    await render(
+      <MemoryRouter initialEntries={["/pokemon/eevee"]}>
+        <PokemonPage previous={previous} next={next}/>
+      </MemoryRouter>
+    )
 
     expect(screen.getByText("Previous")).toHaveAttribute("href", "/pokemon/ditto")
     expect(screen.getByText("Next")).toHaveAttribute("href", "/pokemon/vaporeon")
@@ -120,13 +116,11 @@ describe("<PokemonPage />", () => {
   it("should not render previous and next urls if none exist", async () => {
     axiosMock.get.mockResolvedValueOnce({ data: pokemonList })
 
-    await act(async () => {
-      render(
-        <MemoryRouter initialEntries={["/pokemon/eevee"]}>
-          <PokemonPage />
-        </MemoryRouter>,
-      )
-    })
+    await render(
+      <MemoryRouter initialEntries={["/pokemon/eevee"]}>
+        <PokemonPage />
+      </MemoryRouter>
+    )
 
     expect(screen.queryByText("Previous")).toBeNull()
     expect(screen.queryByText("Next")).toBeNull()
