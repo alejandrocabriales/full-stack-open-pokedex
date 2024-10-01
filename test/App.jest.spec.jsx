@@ -16,6 +16,7 @@ describe("<App />", () => {
       }
     })
 
+    // Use act here
     await act(async () => {
       render(
         <Router>
@@ -33,6 +34,7 @@ describe("<App />", () => {
   it("shows error", async () => {
     axios.get.mockRejectedValueOnce(new Error("API Error"))
 
+    // Use act here as well
     await act(async () => {
       render(
         <Router>
