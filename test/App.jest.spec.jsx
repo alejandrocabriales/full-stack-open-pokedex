@@ -1,12 +1,12 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import axiosMock from "axios";
-import { act } from "react"; // Manteniendo el act de react
-import "@testing-library/jest-dom";
-import { BrowserRouter as Router } from "react-router-dom";
-import App from "../src/App";
+import React from "react"
+import { render, screen } from "@testing-library/react"
+import axiosMock from "axios"
+import { act } from "react"
+import "@testing-library/jest-dom"
+import { BrowserRouter as Router } from "react-router-dom"
+import App from "../src/App"
 
-jest.mock("axios");
+jest.mock("axios")
 
 describe("<App />", () => {
   it("fetches data", async () => {
@@ -14,10 +14,10 @@ describe("<App />", () => {
       data: {
         results: [{ url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbasaur", id: 1 }]
       }
-    });
+    })
 
     await act(async () => {
-      render(<Router><App /></Router>); // Asegúrate de que el render esté dentro de act
+      render(<Router><App /></Router>)
     });
 
     expect(axiosMock.get).toHaveBeenCalledTimes(1);
@@ -28,7 +28,7 @@ describe("<App />", () => {
     axiosMock.get.mockRejectedValueOnce(new Error());
 
     await act(async () => {
-      render(<Router><App /></Router>); // Asegúrate de que el render esté dentro de act
+      render(<Router><App /></Router>)
     });
 
     expect(screen.getByTestId("error")).toBeVisible();
