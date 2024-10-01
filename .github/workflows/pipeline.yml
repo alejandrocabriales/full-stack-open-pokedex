@@ -1,4 +1,4 @@
-name:  Pipeline
+name: Deployment pipeline
 on:
     push:
       branches:
@@ -20,3 +20,15 @@ jobs:
         run: npm run build
       - name: Run tests
         run: npm run test
+    bump_version:
+      runs-on: ubuntu-20.04
+      needs: simple_deployment_pipeline 
+      if: ${{ github.event_name == 'push'}} 
+      steps:
+        - uses: actions/checkout@v4 # Asegúrate de obtener el código para poder hacer el bump
+        - name: Bump version and push tag
+          uses: anothrNick/github-tag-action@1.71.0
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+            WITH_V: true
+            DEFAULT_BUMP: patch # Configura el b
