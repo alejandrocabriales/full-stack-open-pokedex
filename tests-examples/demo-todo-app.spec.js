@@ -340,7 +340,7 @@ test.describe("Routing", () => {
 
   test("should allow me to display active items", async ({ page }) => {
     const todoItem = page.getByTestId("todo-item")
-    await page.getByTestId("todo-item").nth(1).getByRole("checkbox").check() 
+    await page.getByTestId("todo-item").nth(1).getByRole("checkbox").check()
     await checkNumberOfCompletedTodosInLocalStorage(page, 1)
     await page.getByRole("link", { name: "Active" }).click()
     await expect(todoItem).toHaveCount(2)
