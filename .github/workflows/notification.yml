@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:    
 
 jobs:
   notify:
@@ -31,7 +32,7 @@ jobs:
           severity: info
           details: Test Succeeded!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
+    
       - name: Test Failure
         if: ${{ failure() }}
         uses: rjstone/discord-webhook-notify@v1
