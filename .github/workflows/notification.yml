@@ -25,19 +25,15 @@ jobs:
       - name: Run tests
         run: npm run test
 
-      - name: Test Success
+      - name: Success
+      
         if: ${{ success() }}
-        uses: rjstone/discord-webhook-notify@v1
+        uses: tenzin1308/discord-notification@v1.0.0
         with:
-          severity: info
-          details: Test Succeeded!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-    
-      - name: Test Failure
+          discord-webhook-url: ${{ secrets.WEBHOOKS_URL }} 
+
+      - name: Failure
         if: ${{ failure() }}
-        uses: rjstone/discord-webhook-notify@v1
+        uses: tenzin1308/discord-notification@v1.0.0
         with:
-          severity: error
-          details: Test Failed!
-          username: ${{github.username}}
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+         discord-webhook-url: ${{ secrets.WEBHOOKS_URL }}
