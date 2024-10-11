@@ -38,4 +38,5 @@ jobs:
         with:
           severity: error
           details: Test Failed!
+          username: ${{github.username}}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
